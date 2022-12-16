@@ -1,4 +1,4 @@
-package org.opencv.android;
+package org.opencv.engine;
 
 import java.io.IOException;
 import java.util.List;

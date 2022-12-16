@@ -1,6 +1,4 @@
-package org.opencv.android;
-
-import org.opencv.R;
+package org.opencv.engine;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,6 +6,8 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.example.opencv.opencvlib.R;
 
 public class CameraGLSurfaceView extends GLSurfaceView {
 

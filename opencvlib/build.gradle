@@ -14,9 +14,14 @@ android {
 
         externalNativeBuild {
             cmake {
+                cppFlags "-std=c++14"
+                abiFilters "armeabi-v7a"
                 arguments "-DANDROID_STL=c++_shared"
-                targets "opencv_jni_shared"
+//                targets "opencv_jni_shared"
             }
+        }
+        ndk {
+            abiFilters "armeabi-v7a"
         }
     }
 
@@ -42,6 +47,7 @@ android {
     externalNativeBuild {
         cmake {
             path (project.projectDir.toString() + '/libcxx_helper/CMakeLists.txt')
+            println(project.projectDir.toString() + '/libcxx_helper/CMakeLists.txt')
         }
     }
 }
