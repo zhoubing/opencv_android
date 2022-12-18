@@ -1,4 +1,4 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -7,7 +7,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import org.opencv.engine.CameraGLSurfaceView.CameraTextureListener;
+import org.opencv.android.CameraGLSurfaceView.CameraTextureListener;
 
 import android.annotation.TargetApi;
 import android.graphics.SurfaceTexture;

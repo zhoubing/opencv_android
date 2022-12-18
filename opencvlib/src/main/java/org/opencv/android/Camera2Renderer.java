@@ -1,4 +1,4 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 import java.util.Arrays;
 import java.util.concurrent.Semaphore;

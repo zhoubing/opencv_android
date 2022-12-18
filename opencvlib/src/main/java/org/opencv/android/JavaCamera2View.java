@@ -1,4 +1,4 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

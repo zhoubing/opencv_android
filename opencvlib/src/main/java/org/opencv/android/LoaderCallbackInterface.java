@@ -1,4 +1,4 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 /**
  * Interface for callback object in case of asynchronous initialization of OpenCV.

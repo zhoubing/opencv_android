@@ -1,4 +1,4 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 import org.opencv.core.Core;
 

@@ -1,9 +1,10 @@
-package org.opencv.engine;
+package org.opencv.android;
 
 import java.io.File;
 import java.util.StringTokenizer;
 
 import org.opencv.core.Core;
+import org.opencv.engine.OpenCVEngineInterface;
 
 import android.content.ComponentName;
 import android.content.Context;

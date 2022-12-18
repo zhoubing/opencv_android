@@ -18,10 +18,13 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.engine.Utils;
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.InstallCallbackInterface;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
-import org.opencv.osgi.OpenCVNativeLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,20 +32,56 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 public class MainActivity extends AppCompatActivity {
+    private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            super.onManagerConnected(status);
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS: {
+                    Log.i("OpenCV", "OpenCV loaded successfully");
+                    initClassifier();
+                }
+                break;
+                default: {
+                    super.onManagerConnected(status);
+                }
+                break;
+            }
+        }
+
+        @Override
+        public void onPackageInstall(int operation, InstallCallbackInterface callback) {
+            super.onPackageInstall(operation, callback);
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pic);
-        OpenCVNativeLoader openCVNativeLoader = new OpenCVNativeLoader();
-        openCVNativeLoader.init();
+
+//        OpenCVNativeLoader openCVNativeLoader = new OpenCVNativeLoader();
+//        openCVNativeLoader.init();
+
 //        ByteBuffer buffer = ByteBuffer.allocateDirect(bitmap.getByteCount());
 //        bitmap.copyPixelsToBuffer(buffer);
 //        Mat mat = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4, buffer);
 //        Log.d("OpenCV", "mat channels: " + mat.channels() + " cols: " + mat.cols() + " rows: " + mat.rows());
-        initClassifier();
+
+
+//        initClassifier();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!OpenCVLoader.initDebug()) {
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, baseLoaderCallback);
+        } else {
+            baseLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
 
     private void initClassifier() {
         try {
@@ -82,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             Bitmap bmp;
-            Mat tmp = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8U, new Scalar(0));
+            //Mat tmp = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8U, new Scalar(0));
             try {
                 Log.e("OpenCV", "1");
-                Imgproc.cvtColor(mat, tmp, Imgproc.COLOR_GRAY2RGBA, 0);
+                //Imgproc.cvtColor(mat, tmp, Imgproc.COLOR_GRAY2RGBA, 0);
                 Log.e("OpenCV", "2");
-                bmp = Bitmap.createBitmap(tmp.cols(), tmp.rows(), Bitmap.Config.ARGB_8888);
+                bmp = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
                 Log.e("OpenCV", "3");
-                Utils.matToBitmap(tmp, bmp);
+                Utils.matToBitmap(mat, bmp);
                 Log.e("OpenCV", "4");
                 ImageView imageView = findViewById(R.id.image);
                 imageView.setImageBitmap(bmp);
