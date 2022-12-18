@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             is.close();
             os.close();
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pic);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.man);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(bitmap.getByteCount());
             bitmap.copyPixelsToBuffer(byteBuffer);
             Mat mat = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4, byteBuffer);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "load classifier successful", Toast.LENGTH_SHORT).show();
             }
             MatOfRect faces = new MatOfRect();
-            classifier.detectMultiScale(mat, faces, 1.1, 3, 2, new Size(bitmap.getHeight() * 0.4, bitmap.getHeight() * 0.4));
+            classifier.detectMultiScale(mat, faces, 1.1, 3, 2, new Size(bitmap.getHeight() * 0.1, bitmap.getHeight() * 0.1));
             Rect[] facesArray = faces.toArray();
             for (int i = 0; i < facesArray.length; i++) {
                 Imgproc.rectangle(mat, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
@@ -82,11 +82,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             Bitmap bmp;
-            Mat tmp = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8U, new Scalar(4));
+            Mat tmp = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8U, new Scalar(0));
             try {
-                Imgproc.cvtColor(mat, tmp, Imgproc.COLOR_GRAY2RGBA, 4);
+                Log.e("OpenCV", "1");
+                Imgproc.cvtColor(mat, tmp, Imgproc.COLOR_GRAY2RGBA, 0);
+                Log.e("OpenCV", "2");
                 bmp = Bitmap.createBitmap(tmp.cols(), tmp.rows(), Bitmap.Config.ARGB_8888);
+                Log.e("OpenCV", "3");
                 Utils.matToBitmap(tmp, bmp);
+                Log.e("OpenCV", "4");
                 ImageView imageView = findViewById(R.id.image);
                 imageView.setImageBitmap(bmp);
             } catch (CvException e) {
